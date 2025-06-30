@@ -63,3 +63,23 @@ export const fetchBlogById = async (req, res) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 }
+
+
+export const logginedUserBlogs=async(req,res)=>{
+  try{
+    const userId=req.user
+    console.log("User ID:", userId);
+    if (!userId) {
+      return res.status(400).json({ message: "login is required" });
+    }
+
+    const authorBlogs=await Blog.find({ author: userId }).populate("author", "username email").sort({ createdAt: -1 });
+    if (!authorBlogs || authorBlogs.length === 0) {
+      return res.status(404).json({ message: "No blogs found for this author" });
+    }
+    return res.status(200).json(authorBlogs);
+  }catch(error){
+    console.error("Error in logginedUserBlogs:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+}
