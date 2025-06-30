@@ -1,4 +1,5 @@
 import Blog from "../models/Blog.model.js";
+import User from "../models/User.model.js";
 
 export const createBlog = async (req, res) => {
   try {
@@ -27,3 +28,18 @@ export const createBlog = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+
+
+export const fetchAllBlogs=async(req,res)=>{
+    try{
+        const feed=await Blog.find({}).populate("author","username email").sort({ createdAt: -1 });
+        if(!feed || feed.length === 0){
+            return res.status(404).json({ message: "No blogs found" });
+        }
+        return res.status(200).json(feed);
+    }catch(error){
+        console.error("Error in fetchAllBlogs:", error);
+        return res.status(500).json({ message: "Internal server error" });
+    }
+}

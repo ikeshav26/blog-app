@@ -1,5 +1,5 @@
 import express from 'express';
-import { createBlog } from '../controller/Blog.controller.js';
+import { createBlog,fetchAllBlogs } from '../controller/Blog.controller.js';
 import { authUser } from '../middleware/Auth.middleware.js';
 
 
@@ -10,6 +10,7 @@ const router=express.Router();
 
 
 router.post('/create',authUser,createBlog)
+router.get('/feed',authUser,fetchAllBlogs);
 
 
 

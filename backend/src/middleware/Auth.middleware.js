@@ -24,3 +24,7 @@ export const authUser=async(req,resizeBy,next)=>{
         return res.status(500).json({ message: "Internal server error" });
     }
 }
+
+
+
+
