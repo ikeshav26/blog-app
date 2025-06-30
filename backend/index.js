@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import connectToDb from './src/config/Mongodb.config.js';
 import userRoutes from './src/routes/User.routes.js'
 import cookieParser from 'cookie-parser';
-
+import blogRoutes from './src/routes/Blog.routes.js'
 
 const app=express();
 dotenv.config();
@@ -23,6 +23,7 @@ app.get('/', (req, res) => {
 
 
 app.use('/api/user',userRoutes)
+app.use('/api/blog', blogRoutes);
 
 
 
