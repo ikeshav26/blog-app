@@ -43,3 +43,23 @@ export const fetchAllBlogs=async(req,res)=>{
         return res.status(500).json({ message: "Internal server error" });
     }
 }
+
+
+
+export const fetchBlogById = async (req, res) => {
+  try{
+    const blogId=req.params.id;
+    if (!blogId) {
+      return res.status(400).json({ message: "Blog ID is required" });
+    }
+
+    const blog=await Blog.findById(blogId).populate("author", "username email");
+    if (!blog) {
+      return res.status(404).json({ message: "Blog not found" });
+    }
+    return res.status(200).json(blog);
+  }catch(error){
+    console.error("Error in fetchBlogById:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+}
