@@ -1,7 +1,24 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 const Signup = () => {
+  const [email, setemail] = useState("")
+    const [password, setPassword] = useState("");
+    const [username, setusername] = useState("")
+  
+    const submitHandler=(e)=>{
+      e.preventDefault()
+  
+      const formData={
+        email,
+        username,
+        password
+      }
+      console.log(formData);
+      setemail("")
+      setPassword("")
+      setusername("")
+    }
   return (
     <div className="min-h-screen flex items-center justify-center bg-neutral-900 text-white px-4">
       <div className="w-full max-w-4xl bg-neutral-800 shadow-lg rounded-xl overflow-hidden grid md:grid-cols-2">
@@ -15,28 +32,37 @@ const Signup = () => {
             </p>
           </div>
 
-          <form className="space-y-5">
-            <div>
-              <label className="block text-sm mb-1">Email</label>
-              <input
-                type="email"
-                placeholder="you@example.com"
-                className="w-full px-4 py-2 bg-neutral-700 border border-neutral-600 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
-              />
-            </div>
+          <form onSubmit={submitHandler} className="space-y-5">
 
             <div>
               <label className="block text-sm mb-1">Full Name</label>
               <input
+                value={username}
+                onChange={(e)=>setusername(e.target.value)}
                 type="text"
                 placeholder="John Doe"
                 className="w-full px-4 py-2 bg-neutral-700 border border-neutral-600 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
               />
             </div>
 
+
+            <div>
+              <label className="block text-sm mb-1">Email</label>
+              <input
+                value={email}
+                onChange={(e)=>setemail(e.target.value)}
+                type="email"
+                placeholder="you@example.com"
+                className="w-full px-4 py-2 bg-neutral-700 border border-neutral-600 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              />
+            </div>
+
+            
             <div>
               <label className="block text-sm mb-1">Password</label>
               <input
+                value={password}
+                onChange={(e)=>setPassword(e.target.value)}
                 type="password"
                 placeholder="••••••••"
                 className="w-full px-4 py-2 bg-neutral-700 border border-neutral-600 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
@@ -44,7 +70,7 @@ const Signup = () => {
             </div>
 
             <div className="flex items-center space-x-2">
-              <input type="checkbox" className="form-checkbox text-emerald-500 bg-neutral-800 border-neutral-600" />
+              <input required type="checkbox" className="form-checkbox text-emerald-500 bg-neutral-800 border-neutral-600" />
               <label className="text-sm text-neutral-300">
                 I agree to the <a href="#" className="text-emerald-400 underline">Terms</a> & <a href="#" className="text-emerald-400 underline">Privacy Policy</a>.
               </label>
