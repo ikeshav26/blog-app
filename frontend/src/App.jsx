@@ -9,6 +9,7 @@ import Feed from './pages/Feed'
 import Create from './pages/Create'
 import EditBlog from './pages/EditBlog'
 import BlogPage from './pages/BlogPage'
+import Contact from './pages/Contact'
 import { useLocation } from 'react-router-dom'
 
 
@@ -26,6 +27,7 @@ const App = () => {
         <Route path='/create-blog' element={<Create/>}/>
         <Route path='/edit-blog/:id' element={<EditBlog/>}/>
         <Route path='/blog/:id' element={<BlogPage/>}/>
+        <Route path='/contact' element={<Contact/>}/>
       </Routes>
     </div>
   )

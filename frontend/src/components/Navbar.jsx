@@ -19,7 +19,7 @@ const Navbar = () => {
             <Link to='/' className="text-neutral-200 font-medium hover:text-emerald-400 transition">Home</Link>
             <Link to='/feed' className="text-neutral-200 font-medium hover:text-emerald-400 transition">Explore</Link>
             <Link to='/create-blog' className="text-neutral-200 font-medium hover:text-emerald-400 transition">Write</Link>
-            <Link to='/contact' className="text-neutral-200 font-medium hover:text-emerald-400 transition">About</Link>
+            <Link to='/contact' className="text-neutral-200 font-medium hover:text-emerald-400 transition">Contact</Link>
           </div>
 
           {/* Desktop: Login + Profile */}
@@ -68,7 +68,7 @@ const Navbar = () => {
           <Link to='/' className="text-neutral-200 font-medium hover:text-emerald-400 transition">Home</Link>
           <Link to='/feed' className="text-neutral-200 font-medium hover:text-emerald-400 transition">Explore</Link>
           <Link to='/create-blog' className="text-neutral-200 font-medium hover:text-emerald-400 transition">Write</Link>
-          <Link to='/contact' className="text-neutral-200 font-medium hover:text-emerald-400 transition">About</Link>
+          <Link to='/contact' className="text-neutral-200 font-medium hover:text-emerald-400 transition">Contact</Link>
 
           <Link to='/login'>
           <button className="bg-emerald-400 hover:bg-emerald-500 text-black px-4 py-2 rounded-full text-sm w-full text-left mt-2 transition-all">
