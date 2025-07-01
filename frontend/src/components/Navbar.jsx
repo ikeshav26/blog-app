@@ -24,9 +24,11 @@ const Navbar = () => {
 
           {/* Desktop: Login + Profile */}
           <div className="hidden md:flex items-center space-x-4">
+            <Link to='/login'>
             <button className="bg-emerald-400 hover:bg-emerald-500 text-black px-5 py-1.5 rounded-full text-sm font-semibold transition-all">
               Login
             </button>
+            </Link>
 
             <Link to="/profile">
               <div className="w-9 h-9 bg-neutral-800 hover:bg-neutral-700 border border-neutral-700 rounded-full flex items-center justify-center transition">
@@ -68,9 +70,11 @@ const Navbar = () => {
           <Link to='/create-blog' className="text-neutral-200 font-medium hover:text-emerald-400 transition">Write</Link>
           <Link to='/contact' className="text-neutral-200 font-medium hover:text-emerald-400 transition">About</Link>
 
+          <Link to='/login'>
           <button className="bg-emerald-400 hover:bg-emerald-500 text-black px-4 py-2 rounded-full text-sm w-full text-left mt-2 transition-all">
             Login
           </button>
+          </Link>
         </div>
       </div>
     </nav>
