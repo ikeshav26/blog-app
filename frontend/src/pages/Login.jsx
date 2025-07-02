@@ -1,20 +1,36 @@
 import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AppContext } from '../context/AppContext';
+import axios from 'axios';
+import { toast } from 'react-hot-toast';
 
 const Login = () => {
   const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
+  const {user, setuser, navigate} = useContext(AppContext);
 
-  const submitHandler = (e) => {
+
+  const submitHandler =async (e) => {
     e.preventDefault();
     const formData = {
       email,
       password
     };
-    console.log(formData);
+    
     setemail("");
     setPassword("");
+
+    const res=await axios.post("http://localhost:3000/api/user/login", formData, {
+      withCredentials: true
+    });
+
+    if (res.status === 201 || res.status === 200) {
+      toast.success(res.data.message || "Login successful!");
+      setuser(true);
+      navigate('/');
+    }else{
+      toast.error(res.data.message || "Login failed. Please check your credentials.");
+    }
   };
 
   return (

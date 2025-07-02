@@ -28,12 +28,12 @@ const Signup = () => {
   });
   
 
-  if (res.status === 201) {
-    toast.success("Account created successfully!");
+  if (res.status === 201 || res.status === 200) {
+    toast.success(res.data.message || "Account created successfully!");
     setuser(true)
     navigate('/')
   }else{
-    toast.error("Failed to create account. Please try again.");
+    toast.error(res.data.message || "Signup failed. Please try again.");
   }
 }
 

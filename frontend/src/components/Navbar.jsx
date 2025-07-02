@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
+import toast from "react-hot-toast";
+import axios from "axios";
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const {user,theme,setTheme}=useContext(AppContext)
+  const {user,setuser,theme,setTheme}=useContext(AppContext)
   
   const handleThemChange=(e)=>{
     if(e.target.checked){
@@ -16,6 +18,20 @@ const Navbar = () => {
       setTheme("light")
       document.documentElement.setAttribute("data-theme", "light");
       localStorage.setItem("theme", "light");
+    }
+  }
+
+
+  const handleLogout=async()=>{
+    const res=await axios.get("http://localhost:3000/api/user/logout", {
+      withCredentials: true
+    });
+    if(res.status === 201 || res.status === 200){
+      toast.success(res.data.message || "Logout successful!");
+      setuser(false);
+      navigate('/');
+    }else{
+      toast.error(res.data.message || "Logout failed. Please try again.");
     }
   }
 
@@ -113,7 +129,7 @@ const Navbar = () => {
                 Login
               </button>
             </Link>:<Link to="/">
-              <button className="btn btn-error btn-sm">
+              <button onClick={()=>handleLogout()} className="btn btn-error btn-sm">
                 Logout
               </button>
             </Link>}
@@ -239,8 +255,8 @@ const Navbar = () => {
             <button className="btn btn-primary btn-sm w-full mt-2">
               Login
             </button>
-          </Link>:<Link to="/login">
-            <button className="btn btn-error btn-sm w-full mt-2">
+          </Link>:<Link to="/">
+            <button onClick={()=>handleLogout()} className="btn btn-error btn-sm w-full mt-2">
               Logout
             </button>
           </Link>}
