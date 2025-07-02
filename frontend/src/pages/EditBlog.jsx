@@ -12,6 +12,20 @@ const EditBlog = () => {
 
   const {id}=useParams()
 
+  const data=axios.get(`http://localhost:3000/api/blog/${id}`, {
+    withCredentials: true,
+  }).then((res) => {
+    if (res.status === 200 || res.status === 201) {
+      setTitle(res.data.title);
+      setContent(res.data.content);
+    } else {
+      toast.error(res.data.message || "Failed to fetch blog data.");
+    }
+  }).catch((error) => {
+    console.error("Error fetching blog data:", error);
+    toast.error("Error fetching blog data. Please try again later.");
+  });
+
   const handleSubmit = async(e) => {
     e.preventDefault();
     const data={

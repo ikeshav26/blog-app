@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 
 const Contact = () => {
   const [form, setForm] = useState({
@@ -13,8 +14,7 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Submitted contact form:", form);
-    alert("Your message has been sent to the admin.");
+    toast.success("Your message has been sent to the admin.");
     setForm({ name: "", email: "", message: "" });
   };
 
