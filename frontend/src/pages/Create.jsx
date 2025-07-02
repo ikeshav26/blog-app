@@ -5,26 +5,33 @@ import { toast } from "react-hot-toast";
 const CreateBlog = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async(e) => {
     e.preventDefault();
+    setLoading(true);
 
     const blogData = {
       title,
       content,
     };
 
-    setTitle("");
-    setContent("");
+    try {
+      const res = await axios.post("https://blog-app-te1y.onrender.com/api/blog/create", blogData, {
+        withCredentials: true,
+      });
 
-    const res=await axios.post("https://blog-app-te1y.onrender.com/api/blog/create", blogData, {
-      withCredentials: true,
-    });
-
-    if (res.status === 201 || res.status === 200) {
-      toast.success(res.data.message || "Blog created successfully!");
-    }else{
-      toast.error(res.data.message || "Failed to create blog. Please try again.");
+      if (res.status === 201 || res.status === 200) {
+        toast.success(res.data.message || "Blog created successfully!");
+        setTitle("");
+        setContent("");
+      } else {
+        toast.error(res.data.message || "Failed to create blog. Please try again.");
+      }
+    } catch (error) {
+      toast.error("An error occurred. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -72,8 +79,16 @@ const CreateBlog = () => {
             <button
               type="submit"
               className="btn btn-primary"
+              disabled={loading}
             >
-              Publish
+              {loading ? (
+                <span className="flex items-center gap-2">
+                  <span className="loading loading-spinner loading-sm"></span>
+                  Publishing...
+                </span>
+              ) : (
+                "Publish"
+              )}
             </button>
           </form>
         </div>

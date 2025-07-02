@@ -4,9 +4,11 @@ import axios from "axios";
 
 const Feed = () => {
   const [blogs, setblogs] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchBlogs = async () => {
+      setLoading(true);
       try {
         const res = await axios.get("https://blog-app-te1y.onrender.com/api/blog/feed", {
           withCredentials: true,
@@ -15,6 +17,8 @@ const Feed = () => {
       } catch (error) {
         console.error("Error fetching blogs:", error);
         setblogs([]);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -30,13 +34,17 @@ const Feed = () => {
         Discover ideas, stories, and insights from creators across every domain.
       </p>
 
-      {blogs.length === 0 ? (
+      {loading ? (
+        <div className="flex justify-center py-20">
+          <span className="loading loading-spinner loading-lg text-primary"></span>
+        </div>
+      ) : blogs.length === 0 ? (
         <div className="text-center text-base-content/50 mt-20 text-lg">
           No blogs available. Be the first to post!
         </div>
       ) : (
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {blogs.map((blog, index) => (
+          {blogs.map((blog) => (
             <Link to={`/blog/${blog._id}`} key={blog._id} className="group">
               <div className="bg-base-200 border border-base-300 rounded-2xl p-6 h-full hover:shadow-lg hover:border-primary transition-all duration-300 flex flex-col">
                 <div className="mb-4">

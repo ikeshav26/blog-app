@@ -4,11 +4,13 @@ import { useParams, Link } from 'react-router-dom';
 
 const BlogPage = () => {
   const [blog, setBlog] = useState(null);
+  const [loading, setLoading] = useState(true);
   const { id } = useParams();
 
   useEffect(() => {
     const fetchBlog = async () => {
       try {
+        setLoading(true);
         const res = await axios.get(`https://blog-app-te1y.onrender.com/api/blog/${id}`, {
           withCredentials: true,
         });
@@ -20,15 +22,26 @@ const BlogPage = () => {
       } catch (error) {
         console.error("Error fetching blog:", error);
         setBlog(null);
+      } finally {
+        setLoading(false);
       }
     };
     fetchBlog();
   }, [id]);
 
-  if (!blog) {
+  if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center text-xl font-semibold text-base-content/70">
+        <span className="loading loading-spinner loading-lg mr-2"></span>
         Loading blog...
+      </div>
+    );
+  }
+
+  if (!blog) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-xl font-semibold text-error">
+        Blog not found.
       </div>
     );
   }

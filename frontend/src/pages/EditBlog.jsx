@@ -1,6 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
-import { useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
 import toast from "react-hot-toast";
@@ -8,41 +7,61 @@ import toast from "react-hot-toast";
 const EditBlog = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const {navigate}=useContext(AppContext)
+  const [loading, setLoading] = useState(false);
+  const { navigate } = useContext(AppContext);
+  const { id } = useParams();
 
-  const {id}=useParams()
+  useEffect(() => {
+    const fetchBlog = async () => {
+      setLoading(true);
+      try {
+        const res = await axios.get(`https://blog-app-te1y.onrender.com/api/blog/${id}`, {
+          withCredentials: true,
+        });
+        if (res.status === 200 || res.status === 201) {
+          setTitle(res.data.title);
+          setContent(res.data.content);
+        } else {
+          toast.error(res.data.message || "Failed to fetch blog data.");
+        }
+      } catch (error) {
+        console.error("Error fetching blog data:", error);
+        toast.error("Error fetching blog data. Please try again later.");
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const data=axios.get(`https://blog-app-te1y.onrender.com/api/blog/${id}`, {
-    withCredentials: true,
-  }).then((res) => {
-    if (res.status === 200 || res.status === 201) {
-      setTitle(res.data.title);
-      setContent(res.data.content);
-    } else {
-      toast.error(res.data.message || "Failed to fetch blog data.");
-    }
-  }).catch((error) => {
-    console.error("Error fetching blog data:", error);
-    toast.error("Error fetching blog data. Please try again later.");
-  });
+    fetchBlog();
+  }, [id]);
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const data={
-      title,
-      content
-    }
-    setTitle("");
-    setContent("");
-    const res=await axios.post(`https://blog-app-te1y.onrender.com/api/blog/update/${id}`, data, {
-      withCredentials: true,
-    });
+    setLoading(true);
+    try {
+      const data = {
+        title,
+        content,
+      };
 
-    if (res.status === 201 || res.status === 200) {
-      toast.success(res.data.message || "Blog updated successfully!");
-      navigate('/profile')
-    } else {
-      toast.error(res.data.message || "Failed to update blog. Please try again.");
+      const res = await axios.post(
+        `https://blog-app-te1y.onrender.com/api/blog/update/${id}`,
+        data,
+        {
+          withCredentials: true,
+        }
+      );
+
+      if (res.status === 201 || res.status === 200) {
+        toast.success(res.data.message || "Blog updated successfully!");
+        navigate("/profile");
+      } else {
+        toast.error(res.data.message || "Failed to update blog. Please try again.");
+      }
+    } catch (error) {
+      toast.error("Something went wrong. Try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -67,43 +86,56 @@ const EditBlog = () => {
           </p>
         </div>
 
-        {/* Edit Form */}
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Title */}
-          <div>
-            <label className="block mb-1 text-sm font-medium text-base-content/70">
-              Title
-            </label>
-            <input
-              type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              className="input input-bordered w-full"
-              required
-            />
+        {/* Show loader while fetching */}
+        {loading ? (
+          <div className="flex justify-center py-12">
+            <span className="loading loading-spinner loading-lg text-primary"></span>
           </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Title */}
+            <div>
+              <label className="block mb-1 text-sm font-medium text-base-content/70">
+                Title
+              </label>
+              <input
+                type="text"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                className="input input-bordered w-full"
+                required
+              />
+            </div>
 
-          {/* Content */}
-          <div>
-            <label className="block mb-1 text-sm font-medium text-base-content/70">
-              Content
-            </label>
-            <textarea
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              rows={8}
-              className="textarea textarea-bordered w-full"
-              required
-            />
-          </div>
+            {/* Content */}
+            <div>
+              <label className="block mb-1 text-sm font-medium text-base-content/70">
+                Content
+              </label>
+              <textarea
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
+                rows={8}
+                className="textarea textarea-bordered w-full"
+                required
+              />
+            </div>
 
-          {/* Submit Button */}
-          <div>
-            <button type="submit" className="btn btn-primary">
-              Update Blog
-            </button>
-          </div>
-        </form>
+            {/* Submit Button */}
+            <div>
+              <button type="submit" className="btn btn-primary" disabled={loading}>
+                {loading ? (
+                  <span className="flex items-center gap-2">
+                    <span className="loading loading-spinner loading-sm"></span>
+                    Updating...
+                  </span>
+                ) : (
+                  "Update Blog"
+                )}
+              </button>
+            </div>
+          </form>
+        )}
       </div>
     </div>
   );

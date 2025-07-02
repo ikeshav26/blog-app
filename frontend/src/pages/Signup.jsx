@@ -8,35 +8,36 @@ const Signup = () => {
   const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setusername] = useState("");
-  const {navigate,user,setuser}=useContext(AppContext)
+  const [loading, setLoading] = useState(false); // New loading state
+  const { navigate, user, setuser } = useContext(AppContext);
 
-  const submitHandler = async(e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
-    const formData = {
-      email,
-      username,
-      password
-    };
-    
-    setemail("");
-    setPassword("");
-    setusername("");
+    const formData = { email, username, password };
 
-    const res=await axios.post("https://blog-app-te1y.onrender.com/api/user/signup", formData, {
-      withCredentials: true 
-  });
-  
+    try {
+      const res = await axios.post("https://blog-app-te1y.onrender.com/api/user/signup", formData, {
+        withCredentials: true
+      });
 
-  if (res.status === 201 || res.status === 200) {
-    toast.success(res.data.message || "Account created successfully!");
-    setuser(true)
-    navigate('/')
-  }else{
-    toast.error(res.data.message || "Signup failed. Please try again.");
-  }
-}
-
+      if (res.status === 201 || res.status === 200) {
+        toast.success(res.data.message || "Account created successfully!");
+        setuser(true);
+        navigate('/');
+      } else {
+        toast.error(res.data.message || "Signup failed. Please try again.");
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message || "An error occurred. Please try again.");
+    } finally {
+      setLoading(false);
+      setemail("");
+      setPassword("");
+      setusername("");
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-base-100 text-base-content px-4">
@@ -61,6 +62,7 @@ const Signup = () => {
                 type="text"
                 placeholder="John Doe"
                 className="input input-bordered w-full"
+                disabled={loading}
               />
             </div>
 
@@ -72,6 +74,7 @@ const Signup = () => {
                 type="email"
                 placeholder="you@example.com"
                 className="input input-bordered w-full"
+                disabled={loading}
               />
             </div>
 
@@ -83,11 +86,12 @@ const Signup = () => {
                 type="password"
                 placeholder="••••••••"
                 className="input input-bordered w-full"
+                disabled={loading}
               />
             </div>
 
             <div className="flex items-center space-x-2">
-              <input required type="checkbox" className="checkbox checkbox-primary" />
+              <input required type="checkbox" className="checkbox checkbox-primary" disabled={loading} />
               <label className="text-sm text-base-content/70">
                 I agree to the <a href="#" className="text-primary underline">Terms</a> & <a href="#" className="text-primary underline">Privacy Policy</a>.
               </label>
@@ -96,8 +100,13 @@ const Signup = () => {
             <button
               type="submit"
               className="btn btn-primary w-full"
+              disabled={loading}
             >
-              Create Account
+              {loading ? (
+                <span className="loading loading-spinner loading-sm"></span>
+              ) : (
+                "Create Account"
+              )}
             </button>
           </form>
 

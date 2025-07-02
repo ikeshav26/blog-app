@@ -7,29 +7,33 @@ import { toast } from 'react-hot-toast';
 const Login = () => {
   const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
-  const {user, setuser, navigate} = useContext(AppContext);
+  const [loading, setLoading] = useState(false); // Loading state added
+  const { user, setuser, navigate } = useContext(AppContext);
 
-
-  const submitHandler =async (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
-    const formData = {
-      email,
-      password
-    };
-    
-    setemail("");
-    setPassword("");
+    setLoading(true);
 
-    const res=await axios.post("https://blog-app-te1y.onrender.com/api/user/login", formData, {
-      withCredentials: true
-    });
+    const formData = { email, password };
 
-    if (res.status === 201 || res.status === 200) {
-      toast.success(res.data.message || "Login successful!");
-      setuser(true);
-      navigate('/');
-    }else{
-      toast.error(res.data.message || "Login failed. Please check your credentials.");
+    try {
+      const res = await axios.post("https://blog-app-te1y.onrender.com/api/user/login", formData, {
+        withCredentials: true
+      });
+
+      if (res.status === 200 || res.status === 201) {
+        toast.success(res.data.message || "Login successful!");
+        setuser(true);
+        navigate('/');
+      } else {
+        toast.error(res.data.message || "Login failed. Please check your credentials.");
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+      setemail("");
+      setPassword("");
     }
   };
 
@@ -64,6 +68,7 @@ const Login = () => {
                 type="email"
                 placeholder="you@example.com"
                 className="input input-bordered w-full"
+                disabled={loading}
               />
             </div>
 
@@ -75,11 +80,12 @@ const Login = () => {
                 type="password"
                 placeholder="••••••••"
                 className="input input-bordered w-full"
+                disabled={loading}
               />
             </div>
 
             <div className="flex items-center space-x-2">
-              <input required type="checkbox" className="checkbox checkbox-primary" />
+              <input required type="checkbox" className="checkbox checkbox-primary" disabled={loading} />
               <label className="text-sm text-base-content/70">
                 I agree to the <a href="#" className="text-primary underline">Terms</a> & <a href="#" className="text-primary underline">Privacy Policy</a>.
               </label>
@@ -88,8 +94,13 @@ const Login = () => {
             <button
               type="submit"
               className="btn btn-primary w-full"
+              disabled={loading}
             >
-              Login
+              {loading ? (
+                <span className="loading loading-spinner loading-sm"></span>
+              ) : (
+                "Login"
+              )}
             </button>
           </form>
 
