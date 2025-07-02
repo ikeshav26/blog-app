@@ -23,7 +23,7 @@ const Navbar = () => {
 
 
   const handleLogout=async()=>{
-    const res=await axios.get("http://localhost:3000/api/user/logout", {
+    const res=await axios.get("https://blog-app-te1y.onrender.com/api/user/logout", {
       withCredentials: true
     });
     if(res.status === 201 || res.status === 200){

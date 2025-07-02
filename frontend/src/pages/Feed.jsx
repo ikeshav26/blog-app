@@ -8,7 +8,7 @@ const Feed = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/api/blog/feed", {
+        const res = await axios.get("https://blog-app-te1y.onrender.com/api/blog/feed", {
           withCredentials: true,
         });
         setblogs(res.data);

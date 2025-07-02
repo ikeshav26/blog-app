@@ -9,7 +9,7 @@ const BlogPage = () => {
   useEffect(() => {
     const fetchBlog = async () => {
       try {
-        const res = await axios.get(`http://localhost:3000/api/blog/${id}`, {
+        const res = await axios.get(`https://blog-app-te1y.onrender.com/api/blog/${id}`, {
           withCredentials: true,
         });
         if (res.status === 200 || res.status === 201) {

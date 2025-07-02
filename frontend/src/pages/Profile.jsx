@@ -9,7 +9,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchMyBlogs = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/api/blog/my-blogs", {
+        const res = await axios.get("https://blog-app-te1y.onrender.com/api/blog/my-blogs", {
           withCredentials: true,
         });
         if (res.status === 200 || res.status === 201) {
@@ -24,7 +24,7 @@ const Profile = () => {
 
   const deleteHandler=async(e)=>{
     const id=e;
-    const res=await axios.get(`http://localhost:3000/api/blog/delete/${id}`, {
+    const res=await axios.get(`https://blog-app-te1y.onrender.com/api/blog/delete/${id}`, {
       withCredentials: true,
     });
     if (res.status === 200 || res.status === 201) {

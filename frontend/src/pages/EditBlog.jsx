@@ -12,7 +12,7 @@ const EditBlog = () => {
 
   const {id}=useParams()
 
-  const data=axios.get(`http://localhost:3000/api/blog/${id}`, {
+  const data=axios.get(`https://blog-app-te1y.onrender.com/api/blog/${id}`, {
     withCredentials: true,
   }).then((res) => {
     if (res.status === 200 || res.status === 201) {
@@ -34,7 +34,7 @@ const EditBlog = () => {
     }
     setTitle("");
     setContent("");
-    const res=await axios.post(`http://localhost:3000/api/blog/update/${id}`, data, {
+    const res=await axios.post(`https://blog-app-te1y.onrender.com/api/blog/update/${id}`, data, {
       withCredentials: true,
     });
 

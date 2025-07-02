@@ -23,7 +23,7 @@ const Signup = () => {
     setPassword("");
     setusername("");
 
-    const res=await axios.post("http://localhost:3000/api/user/signup", formData, {
+    const res=await axios.post("https://blog-app-te1y.onrender.com/api/user/signup", formData, {
       withCredentials: true 
   });
   

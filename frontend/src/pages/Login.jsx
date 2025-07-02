@@ -20,7 +20,7 @@ const Login = () => {
     setemail("");
     setPassword("");
 
-    const res=await axios.post("http://localhost:3000/api/user/login", formData, {
+    const res=await axios.post("https://blog-app-te1y.onrender.com/api/user/login", formData, {
       withCredentials: true
     });
 
