@@ -73,7 +73,7 @@ export const logginedUserBlogs=async(req,res)=>{
       return res.status(400).json({ message: "login is required" });
     }
 
-    const authorBlogs=await Blog.find({ author: userId }).populate("author", "username email").sort({ createdAt: -1 });
+    const authorBlogs=await Blog.find({ author: userId }).populate("author", "username email ").sort({ createdAt: -1 });
     if (!authorBlogs || authorBlogs.length === 0) {
       return res.status(404).json({ message: "No blogs found for this author" });
     }
