@@ -1,10 +1,12 @@
+import axios from "axios";
 import React, { useState } from "react";
+import { toast } from "react-hot-toast";
 
 const CreateBlog = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
 
     const blogData = {
@@ -12,8 +14,18 @@ const CreateBlog = () => {
       content,
     };
 
-    console.log("Blog Submitted:", blogData);
-    // TODO: Send to backend
+    setTitle("");
+    setContent("");
+
+    const res=await axios.post("http://localhost:3000/api/blog/create", blogData, {
+      withCredentials: true,
+    });
+
+    if (res.status === 201 || res.status === 200) {
+      toast.success(res.data.message || "Blog created successfully!");
+    }else{
+      toast.error(res.data.message || "Failed to create blog. Please try again.");
+    }
   };
 
   return (

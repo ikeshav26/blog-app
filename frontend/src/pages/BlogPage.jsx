@@ -1,34 +1,46 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 
 const BlogPage = () => {
+  const [blog, setBlog] = useState(null);
   const { id } = useParams();
 
-  const blog = {
-    title: "Understanding JavaScript Closures",
-    author: "Aditi Sharma",
-    createdAt: "July 1, 2025",
-    coverImage: "/blog-cover.jpg",  // in public/
-    avatar: "/profile.jpg",          // in public/
-    content: `
-      Closures are a powerful concept in JavaScript. A closure gives you access to an outer function’s scope from an inner function.
+  useEffect(() => {
+    const fetchBlog = async () => {
+      try {
+        const res = await axios.get(`http://localhost:3000/api/blog/${id}`, {
+          withCredentials: true,
+        });
+        if (res.status === 200 || res.status === 201) {
+          setBlog(res.data);
+        } else {
+          setBlog(null);
+        }
+      } catch (error) {
+        console.error("Error fetching blog:", error);
+        setBlog(null);
+      }
+    };
+    fetchBlog();
+  }, [id]);
 
-      They are created every time a function is created, at function creation time. Closures can help manage private variables and create function factories.
-
-      In this blog, we’ll explore how closures work with real-world examples and how you can leverage them for cleaner code.
-    `
-  };
+  if (!blog) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-xl font-semibold text-base-content/70">
+        Loading blog...
+      </div>
+    );
+  }
 
   return (
     <div className="bg-base-100 text-base-content min-h-screen pt-20 px-4 md:px-8 pb-16">
-      
-      {/* Container */}
       <div className="max-w-4xl mx-auto bg-base-200 shadow-xl rounded-xl overflow-hidden border border-base-300">
 
-        {/* Cover */}
+        {/* Cover Image */}
         <div className="relative h-60 md:h-96 w-full">
           <img
-            src={blog.coverImage}
+            src="/blog-cover.jpg"
             alt="Cover"
             className="w-full h-full object-cover"
           />
@@ -39,14 +51,22 @@ const BlogPage = () => {
 
         {/* Author Info */}
         <div className="flex items-center gap-4 px-6 py-6 border-b border-base-300">
-          <img src={blog.avatar} alt="Author" className="w-12 h-12 rounded-full " />
+          <img src="/profile.jpg" alt="Author" className="w-12 h-12 rounded-full" />
           <div>
-            <p className="text-base-content font-semibold text-md">{blog.author}</p>
-            <p className="text-sm text-base-content/70">{blog.createdAt}</p>
+            <p className="text-base-content font-semibold text-md">
+              {blog.author?.username || "Unknown Author"}
+            </p>
+            <p className="text-sm text-base-content/70">
+              {new Date(blog.createdAt).toLocaleDateString('en-IN', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+              })}
+            </p>
           </div>
         </div>
 
-        {/* Content */}
+        {/* Blog Content */}
         <div className="px-6 pb-10 pt-4 text-base-content/90 leading-relaxed text-[1.05rem] space-y-5">
           {blog.content
             .split('\n')
