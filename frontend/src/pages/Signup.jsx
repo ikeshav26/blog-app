@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const Signup = () => {
   const [email, setemail] = useState("");
@@ -18,7 +19,13 @@ const Signup = () => {
     setemail("");
     setPassword("");
     setusername("");
-  };
+
+    const res=axios.post("http://localhost:3000/api/user/signup", formData, {
+      withCredentials: true 
+  });
+  console.log(res.data);
+}
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-base-100 text-base-content px-4">

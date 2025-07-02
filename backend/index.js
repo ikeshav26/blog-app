@@ -5,10 +5,15 @@ import userRoutes from './src/routes/User.routes.js'
 import cookieParser from 'cookie-parser';
 import blogRoutes from './src/routes/Blog.routes.js'
 import User from './src/models/User.model.js';
+import cors from 'cors';
 
 const app=express();
 dotenv.config();
 
+app.use(cors({
+  origin: process.env.CLIENT_URL,
+  credentials: true, // Allow cookies to be sent
+}));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

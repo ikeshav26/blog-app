@@ -19,14 +19,6 @@ const Navbar = () => {
     }
   }
 
-  // Initialize theme on component mount
-  useEffect(() => {
-    const savedTheme = localStorage.getItem("theme") || "light";
-    setTheme(savedTheme);
-    document.documentElement.setAttribute("data-theme", savedTheme);
-  }, [setTheme]);
-
-
   
   return (
     <nav className="fixed top-0 left-0 w-full z-50 bg-base-100 border-b border-base-300 shadow-sm">

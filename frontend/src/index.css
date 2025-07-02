@@ -1,7 +1,10 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
-
+/* Prevent flash of unstyled content by setting theme immediately */
+:root {
+  color-scheme: light;
+}
 
 [data-theme="dark"] {
   color-scheme: dark;
