@@ -1,25 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [darkMode, setDarkMode] = React.useState(true);
-  const {user}=useContext(AppContext)
+  const {user,theme,setTheme}=useContext(AppContext)
+  
+  const handleThemChange=(e)=>{
+    if(e.target.checked){
+      setTheme("dark")
+      document.documentElement.setAttribute("data-theme", "dark");
+      localStorage.setItem("theme", "dark");
+    }else{
+      setTheme("light")
+      document.documentElement.setAttribute("data-theme", "light");
+      localStorage.setItem("theme", "light");
+    }
+  }
 
-  const toggleTheme = () => {
-    setDarkMode(!darkMode);
-    document.documentElement.classList.toggle("dark", !darkMode);
-  };
+  // Initialize theme on component mount
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme") || "light";
+    setTheme(savedTheme);
+    document.documentElement.setAttribute("data-theme", savedTheme);
+  }, [setTheme]);
 
+
+  
   return (
-    <nav className="fixed top-0 left-0 w-full z-50 bg-neutral-900 border-b border-neutral-800">
+    <nav className="fixed top-0 left-0 w-full z-50 bg-base-100 border-b border-base-300 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <h1 className="text-2xl font-bold text-emerald-400 tracking-tight">
+            <h1 className="text-2xl font-bold text-primary tracking-tight">
               BitBlog
             </h1>
           </div>
@@ -28,25 +43,25 @@ const Navbar = () => {
           <div className="hidden md:flex items-center space-x-8">
             <Link
               to="/"
-              className="text-neutral-200 font-medium hover:text-emerald-400 transition"
+              className="text-base-content font-medium hover:text-primary transition"
             >
               Home
             </Link>
             <Link
               to="/feed"
-              className="text-neutral-200 font-medium hover:text-emerald-400 transition"
+              className="text-base-content font-medium hover:text-primary transition"
             >
               Explore
             </Link>
             <Link
               to="/create-blog"
-              className="text-neutral-200 font-medium hover:text-emerald-400 transition"
+              className="text-base-content font-medium hover:text-primary transition"
             >
               Write
             </Link>
             <Link
               to="/contact"
-              className="text-neutral-200 font-medium hover:text-emerald-400 transition"
+              className="text-base-content font-medium hover:text-primary transition"
             >
               Contact
             </Link>
@@ -55,10 +70,10 @@ const Navbar = () => {
           {/* Desktop: Profile + Theme + Login */}
           <div className="hidden md:flex items-center space-x-4">
             <Link to="/profile">
-              <div className="w-9 h-9 bg-neutral-800 hover:bg-neutral-700 border border-neutral-700 rounded-full flex items-center justify-center transition">
+              <div className="w-9 h-9 bg-base-200 hover:bg-base-300 border border-base-300 rounded-full flex items-center justify-center transition">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="w-5 h-5 text-neutral-300"
+                  className="w-5 h-5 text-base-content"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -76,14 +91,15 @@ const Navbar = () => {
             <label className="swap swap-rotate">
               {/* this hidden checkbox controls the state */}
               <input
+                onChange={handleThemChange}
                 type="checkbox"
                 className="theme-controller"
-                value="synthwave"
+                checked={theme === "dark"}
               />
 
               {/* sun icon */}
               <svg
-                className="swap-off h-9 w-9 fill-current"
+                className="swap-off h-9 w-9 fill-warning"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
               >
@@ -92,7 +108,7 @@ const Navbar = () => {
 
               {/* moon icon */}
               <svg
-                className="swap-on h-9 w-9 fill-current"
+                className="swap-on h-9 w-9 fill-info"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
               >
@@ -101,11 +117,11 @@ const Navbar = () => {
             </label>
 
             {!user?<Link to="/login">
-              <button className="bg-emerald-400 hover:bg-emerald-500 text-black px-5 py-1.5 rounded-full text-sm font-semibold transition-all">
+              <button className="btn btn-primary btn-sm">
                 Login
               </button>
             </Link>:<Link to="/">
-              <button className="bg-red-500 hover:bg-red-400 text-white px-5 py-1.5 rounded-full text-sm font-semibold transition-all">
+              <button className="btn btn-error btn-sm">
                 Logout
               </button>
             </Link>}
@@ -114,10 +130,10 @@ const Navbar = () => {
           {/* Mobile: Profile + Theme + Hamburger */}
           <div className="md:hidden flex items-center gap-3">
             <Link to="/profile">
-              <div className="w-8 h-8 bg-neutral-800 hover:bg-neutral-700 border border-neutral-700 rounded-full flex items-center justify-center transition">
+              <div className="w-8 h-8 bg-base-200 hover:bg-base-300 border border-base-300 rounded-full flex items-center justify-center transition">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="w-5 h-5 text-neutral-300"
+                  className="w-5 h-5 text-base-content"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -135,14 +151,15 @@ const Navbar = () => {
             <label className="swap swap-rotate">
               {/* this hidden checkbox controls the state */}
               <input
+                onChange={handleThemChange}
                 type="checkbox"
                 className="theme-controller"
-                value="synthwave"
+                checked={theme === "dark"}
               />
 
               {/* sun icon */}
               <svg
-                className="swap-off h-8 w-8 fill-current"
+                className="swap-off h-8 w-8 fill-warning"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
               >
@@ -151,20 +168,21 @@ const Navbar = () => {
 
               {/* moon icon */}
               <svg
-                className="swap-on h-8 w-8 fill-current"
+                className="swap-on h-8 w-8 fill-info"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
               >
-                <path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z" />
+                <path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1-.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z" />
               </svg>
             </label>
 
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
               aria-label="Toggle menu"
+              className="btn btn-ghost btn-square btn-sm"
             >
               <svg
-                className="w-6 h-6 text-neutral-300"
+                className="w-6 h-6"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
@@ -193,7 +211,7 @@ const Navbar = () => {
       <div
         className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
           mobileOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
-        } bg-neutral-900 border-t border-neutral-800 px-4`}
+        } bg-base-100 border-t border-base-300 px-4`}
       >
         <div
           className={`flex flex-col gap-3 py-4 ${
@@ -202,35 +220,35 @@ const Navbar = () => {
         >
           <Link
             to="/"
-            className="text-neutral-200 font-medium hover:text-emerald-400 transition"
+            className="text-base-content font-medium hover:text-primary transition"
           >
             Home
           </Link>
           <Link
             to="/feed"
-            className="text-neutral-200 font-medium hover:text-emerald-400 transition"
+            className="text-base-content font-medium hover:text-primary transition"
           >
             Explore
           </Link>
           <Link
             to="/create-blog"
-            className="text-neutral-200 font-medium hover:text-emerald-400 transition"
+            className="text-base-content font-medium hover:text-primary transition"
           >
             Write
           </Link>
           <Link
             to="/contact"
-            className="text-neutral-200 font-medium hover:text-emerald-400 transition"
+            className="text-base-content font-medium hover:text-primary transition"
           >
             Contact
           </Link>
 
           {!user?<Link to="/login">
-            <button className="bg-emerald-400 hover:bg-emerald-500 text-black px-4 py-2 rounded-full text-sm w-full text-left mt-2 transition-all">
+            <button className="btn btn-primary btn-sm w-full mt-2">
               Login
             </button>
           </Link>:<Link to="/login">
-            <button className="bg-red-500 hover:bg-red-400 text-white px-4 py-2 rounded-full text-sm w-full text-left mt-2 transition-all">
+            <button className="btn btn-error btn-sm w-full mt-2">
               Logout
             </button>
           </Link>}

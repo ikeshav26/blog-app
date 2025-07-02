@@ -12,20 +12,20 @@ const EditBlog = () => {
   };
 
   return (
-    <div className="bg-[#0e0e0e] min-h-screen text-white pt-24 px-4 md:px-24 pb-16">
+    <div className="bg-base-100 min-h-screen text-base-content pt-24 px-4 md:px-24 pb-16">
       <div className="max-w-4xl mx-auto">
 
         {/* Dummy Header Image */}
         <img
           src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1500&q=80"
           alt="Banner"
-          className="w-full h-60 object-cover rounded-xl shadow-lg border border-gray-800 mb-8"
+          className="w-full h-60 object-cover rounded-xl shadow-lg border border-base-300 mb-8"
         />
 
         {/* Supportive Text */}
         <div className="mb-10">
-          <h1 className="text-3xl font-bold text-emerald-400 mb-2">Edit Your Blog</h1>
-          <p className="text-gray-400">
+          <h1 className="text-3xl font-bold text-primary mb-2">Edit Your Blog</h1>
+          <p className="text-base-content/70">
             Make changes to your blog title and content. Keep your audience engaged with fresh and informative writing.
           </p>
         </div>
@@ -35,24 +35,24 @@ const EditBlog = () => {
 
           {/* Title */}
           <div>
-            <label className="block mb-1 text-sm font-medium text-gray-300">Title</label>
+            <label className="block mb-1 text-sm font-medium text-base-content/70">Title</label>
             <input
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full bg-[#1a1a1a] text-white p-3 rounded-md border border-gray-700 focus:ring-2 focus:ring-emerald-500 outline-none"
+              className="input input-bordered w-full"
               required
             />
           </div>
 
           {/* Content */}
           <div>
-            <label className="block mb-1 text-sm font-medium text-gray-300">Content</label>
+            <label className="block mb-1 text-sm font-medium text-base-content/70">Content</label>
             <textarea
               value={content}
               onChange={(e) => setContent(e.target.value)}
               rows={8}
-              className="w-full bg-[#1a1a1a] text-white p-3 rounded-md border border-gray-700 focus:ring-2 focus:ring-emerald-500 outline-none"
+              className="textarea textarea-bordered w-full"
               required
             />
           </div>
@@ -61,7 +61,7 @@ const EditBlog = () => {
           <div>
             <button
               type="submit"
-              className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-2 px-6 rounded-full shadow"
+              className="btn btn-primary"
             >
               Update Blog
             </button>

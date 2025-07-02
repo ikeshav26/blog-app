@@ -69,36 +69,36 @@ const blogs = [
 
 const Feed = () => {
   return (
-    <div className="bg-[#121212] min-h-screen text-white pt-24 px-4 md:px-20 pb-20">
-      <h1 className="text-4xl font-bold mb-2 text-emerald-400 text-center">
+    <div className="bg-base-100 min-h-screen text-base-content pt-24 px-4 md:px-20 pb-20">
+      <h1 className="text-4xl font-bold mb-2 text-primary text-center">
         📝 Community Blog Feed
       </h1>
-      <p className="text-center text-gray-400 mb-10 text-sm md:text-base">
+      <p className="text-center text-base-content/70 mb-10 text-sm md:text-base">
         Discover ideas, stories, and insights from creators across every domain.
       </p>
 
       {blogs.length === 0 ? (
-        <div className="text-center text-gray-500 mt-20 text-lg">
+        <div className="text-center text-base-content/50 mt-20 text-lg">
           No blogs available. Be the first to post!
         </div>
       ) : (
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {blogs.map((blog, index) => (
             <Link to={`/blog/${index + 1}`} key={index} className="group">
-              <div className="bg-[#1c1c1c] border border-neutral-700 rounded-2xl p-6 h-full hover:shadow-lg hover:border-emerald-500 transition-all duration-300 flex flex-col">
+              <div className="bg-base-200 border border-base-300 rounded-2xl p-6 h-full hover:shadow-lg hover:border-primary transition-all duration-300 flex flex-col">
                 <div className="mb-4">
-                  <h2 className="text-xl font-semibold mb-2 text-white group-hover:text-emerald-400 transition">
+                  <h2 className="text-xl font-semibold mb-2 text-base-content group-hover:text-primary transition">
                     {blog.title}
                   </h2>
-                  <p className="text-sm text-gray-400 line-clamp-3">
+                  <p className="text-sm text-base-content/70 line-clamp-3">
                     {blog.content}
                   </p>
                 </div>
-                <div className="flex items-center justify-between mt-auto pt-4 border-t border-neutral-800 text-xs text-gray-400">
-                  <span className="bg-neutral-800 px-2 py-1 rounded-full">
+                <div className="flex items-center justify-between mt-auto pt-4 border-t border-base-300 text-xs text-base-content/60">
+                  <span className="bg-base-300 px-2 py-1 rounded-full">
                     ✍️ {blog.author}
                   </span>
-                  <span className="text-emerald-400 font-medium">
+                  <span className="text-primary font-medium">
                     {blog.date}
                   </span>
                 </div>

@@ -7,9 +7,10 @@ const AppContext=createContext()
 const AppProvider=({children})=>{
     const [user, setuser] = useState(true)
     const [loading, setLoading] = useState(false)
+    const [theme, setTheme] = useState("light")
     const navigate=useNavigate()
     return (
-        <AppContext.Provider value={{user, setuser, loading, setLoading, navigate}}>
+        <AppContext.Provider value={{user, setuser, loading, setLoading, navigate,theme, setTheme}}>
             {children}
         </AppContext.Provider>
     )

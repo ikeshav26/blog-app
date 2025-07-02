@@ -20,10 +20,10 @@ const BlogPage = () => {
   };
 
   return (
-    <div className="bg-[#0f0f0f] text-white min-h-screen pt-20 px-4 md:px-8 pb-16">
+    <div className="bg-base-100 text-base-content min-h-screen pt-20 px-4 md:px-8 pb-16">
       
       {/* Container */}
-      <div className="max-w-4xl mx-auto bg-[#181818] shadow-xl rounded-xl overflow-hidden border border-gray-800">
+      <div className="max-w-4xl mx-auto bg-base-200 shadow-xl rounded-xl overflow-hidden border border-base-300">
 
         {/* Cover */}
         <div className="relative h-60 md:h-96 w-full">
@@ -32,22 +32,22 @@ const BlogPage = () => {
             alt="Cover"
             className="w-full h-full object-cover"
           />
-          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#181818] to-transparent p-6">
-            <h1 className="text-3xl md:text-4xl font-extrabold text-white">{blog.title}</h1>
+          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-base-100 to-transparent p-6">
+            <h1 className="text-3xl md:text-4xl font-extrabold text-base-content">{blog.title}</h1>
           </div>
         </div>
 
         {/* Author Info */}
-        <div className="flex items-center gap-4 px-6 py-6 border-b border-gray-700">
-          <img src={blog.avatar} alt="Author" className="w-12 h-12  rounded-full " />
+        <div className="flex items-center gap-4 px-6 py-6 border-b border-base-300">
+          <img src={blog.avatar} alt="Author" className="w-12 h-12 rounded-full " />
           <div>
-            <p className="text-white font-semibold text-md">{blog.author}</p>
-            <p className="text-sm text-gray-400">{blog.createdAt}</p>
+            <p className="text-base-content font-semibold text-md">{blog.author}</p>
+            <p className="text-sm text-base-content/70">{blog.createdAt}</p>
           </div>
         </div>
 
         {/* Content */}
-        <div className="px-6 pb-10 pt-4 text-gray-300 leading-relaxed text-[1.05rem] space-y-5">
+        <div className="px-6 pb-10 pt-4 text-base-content/90 leading-relaxed text-[1.05rem] space-y-5">
           {blog.content
             .split('\n')
             .filter(para => para.trim())
@@ -60,7 +60,7 @@ const BlogPage = () => {
         <div className="px-6 pb-6">
           <Link
             to="/feed"
-            className="inline-block text-sm text-emerald-400 hover:text-emerald-300 transition"
+            className="inline-block text-sm text-primary hover:text-primary/80 transition"
           >
             ← Back to Feed
           </Link>
