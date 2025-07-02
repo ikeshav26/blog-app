@@ -10,6 +10,8 @@ import cors from 'cors';
 const app=express();
 dotenv.config();
 
+
+
 app.use(cors({
   origin: process.env.CLIENT_URL,
   credentials: true, // Allow cookies to be sent

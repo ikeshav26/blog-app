@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { AppContext } from '../context/AppContext';
+import { toast } from 'react-hot-toast';
 
 const Signup = () => {
   const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setusername] = useState("");
+  const {navigate,user,setuser}=useContext(AppContext)
 
-  const submitHandler = (e) => {
+  const submitHandler = async(e) => {
     e.preventDefault();
 
     const formData = {
@@ -15,15 +18,23 @@ const Signup = () => {
       username,
       password
     };
-    console.log(formData);
+    
     setemail("");
     setPassword("");
     setusername("");
 
-    const res=axios.post("http://localhost:3000/api/user/signup", formData, {
+    const res=await axios.post("http://localhost:3000/api/user/signup", formData, {
       withCredentials: true 
   });
-  console.log(res.data);
+  
+
+  if (res.status === 201) {
+    toast.success("Account created successfully!");
+    setuser(true)
+    navigate('/')
+  }else{
+    toast.error("Failed to create account. Please try again.");
+  }
 }
 
 

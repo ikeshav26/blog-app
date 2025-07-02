@@ -12,6 +12,8 @@ import BlogPage from './pages/BlogPage'
 import Contact from './pages/Contact'
 import { useLocation } from 'react-router-dom'
 import { AppContext } from './context/AppContext'
+import  {Toaster}  from 'react-hot-toast'
+
 
 
 const App = () => {
@@ -19,7 +21,7 @@ const App = () => {
   const {user}=useContext(AppContext)
   
   return (
-    <div className='bg-[#f9fafb]'>
+    <div className='bg-base-100'>
       {location.pathname.includes('/login') || location.pathname.includes('/signup') ? null : <Navbar/>}
       <Routes>
         <Route path='/' element={<Home/>}/>
@@ -32,6 +34,28 @@ const App = () => {
         <Route path='/blog/:id' element={user?<BlogPage/>:<Navigate to='/login'/>}/>
         <Route path='/contact' element={<Contact/>}/>
       </Routes>
+      <Toaster
+  position="top-right"
+  toastOptions={{
+    style: {
+      background: 'var(--color-base-100)',
+      color: 'var(--color-base-content)',
+      border: '1px solid var(--color-base-300)',
+    },
+    success: {
+      style: {
+        background: 'var(--color-success)',
+        color: 'var(--color-success-content)',
+      },
+    },
+    error: {
+      style: {
+        background: 'var(--color-error)',
+        color: 'var(--color-error-content)',
+      },
+    },
+  }}
+/>
     </div>
   )
 }
