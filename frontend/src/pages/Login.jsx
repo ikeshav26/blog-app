@@ -3,26 +3,25 @@ import { Link } from 'react-router-dom';
 import { AppContext } from '../context/AppContext';
 
 const Login = () => {
-  const [email, setemail] = useState("")
+  const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
-  
-  const submitHandler=(e)=>{
-    e.preventDefault()
 
-    const formData={
+  const submitHandler = (e) => {
+    e.preventDefault();
+    const formData = {
       email,
       password
-    }
+    };
     console.log(formData);
-    setemail("")
-    setPassword("")
-  }
+    setemail("");
+    setPassword("");
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-neutral-900 text-white px-4">
       <div className="w-full max-w-4xl bg-neutral-800 shadow-lg rounded-xl overflow-hidden grid md:grid-cols-2">
         
-        {/* Left: Form */}
+        {/* Left: Illustration */}
         <div className="hidden md:block bg-neutral-900 p-6">
           <img
             src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/authentication/illustration.svg"
@@ -31,13 +30,12 @@ const Login = () => {
           />
         </div>
 
-        {/* Right: Illustration */}
-        
+        {/* Right: Form */}
         <div className="p-8 md:p-10">
           <div className="mb-6">
             <h2 className="text-3xl font-bold text-emerald-400 mb-6">Welcome back to your BitBlog account</h2>
             <p className="text-sm text-neutral-400 mt-2">
-              Doesn't have an account? <Link to='/signup' className="text-emerald-400 underline">Signup here</Link>
+              Don't have an account? <Link to='/signup' className="text-emerald-400 underline">Signup here</Link>
             </p>
           </div>
 
@@ -45,8 +43,8 @@ const Login = () => {
             <div>
               <label className="block text-sm mb-1">Email</label>
               <input
-              value={email}
-                onChange={(e)=>setemail(e.target.value)}
+                value={email}
+                onChange={(e) => setemail(e.target.value)}
                 type="email"
                 placeholder="you@example.com"
                 className="w-full px-4 py-2 bg-neutral-700 border border-neutral-600 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
@@ -57,7 +55,7 @@ const Login = () => {
               <label className="block text-sm mb-1">Password</label>
               <input
                 value={password}
-                onChange={(e)=>setPassword(e.target.value)}
+                onChange={(e) => setPassword(e.target.value)}
                 type="password"
                 placeholder="••••••••"
                 className="w-full px-4 py-2 bg-neutral-700 border border-neutral-600 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
@@ -77,9 +75,14 @@ const Login = () => {
             >
               Login
             </button>
-
-
           </form>
+
+          {/* Back to Home Link */}
+          <div className="mt-6 text-center">
+            <Link to="/" className="text-emerald-400 hover:underline text-sm">
+              ← Back to Home
+            </Link>
+          </div>
         </div>
       </div>
     </div>
