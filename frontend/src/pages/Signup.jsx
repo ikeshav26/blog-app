@@ -1,8 +1,9 @@
-import React, { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
-import { AppContext } from '../context/AppContext';
-import { toast } from 'react-hot-toast';
+import React, { useContext, useState } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import { AppContext } from "../context/AppContext";
+import { toast } from "react-hot-toast";
+import { FcGoogle } from "react-icons/fc"; 
 
 const Signup = () => {
   const [email, setemail] = useState("");
@@ -18,19 +19,25 @@ const Signup = () => {
     const formData = { email, username, password };
 
     try {
-      const res = await axios.post("https://blog-app-te1y.onrender.com/api/user/signup", formData, {
-        withCredentials: true
-      });
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/user/signup`,
+        formData,
+        {
+          withCredentials: true,
+        }
+      );
 
       if (res.status === 201 || res.status === 200) {
         toast.success(res.data.message || "Account created successfully!");
         setuser(true);
-        navigate('/');
+        navigate("/");
       } else {
         toast.error(res.data.message || "Signup failed. Please try again.");
       }
     } catch (error) {
-      toast.error(error.response?.data?.message || "An error occurred. Please try again.");
+      toast.error(
+        error.response?.data?.message || "An error occurred. Please try again."
+      );
     } finally {
       setLoading(false);
       setemail("");
@@ -42,20 +49,25 @@ const Signup = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-base-100 text-base-content px-4">
       <div className="w-full max-w-4xl bg-base-200 shadow-lg rounded-xl overflow-hidden grid md:grid-cols-2">
-
         {/* Left: Form */}
         <div className="p-8 md:p-10">
           <div className="mb-6">
-            <h2 className="text-3xl font-bold text-primary">Create your BitBlog account</h2>
+            <h2 className="text-3xl font-bold text-primary">
+              Create your BitBlog account
+            </h2>
             <p className="text-sm text-base-content/70 mt-2">
-              Already have an account? <Link to='/login' className="text-primary underline">Login here</Link>
+              Already have an account?{" "}
+              <Link to="/login" className="text-primary underline">
+                Login here
+              </Link>
             </p>
           </div>
 
           <form onSubmit={submitHandler} className="space-y-5">
-
             <div>
-              <label className="block text-sm mb-1 text-base-content">Full Name</label>
+              <label className="block text-sm mb-1 text-base-content">
+                Full Name
+              </label>
               <input
                 value={username}
                 onChange={(e) => setusername(e.target.value)}
@@ -67,7 +79,9 @@ const Signup = () => {
             </div>
 
             <div>
-              <label className="block text-sm mb-1 text-base-content">Email</label>
+              <label className="block text-sm mb-1 text-base-content">
+                Email
+              </label>
               <input
                 value={email}
                 onChange={(e) => setemail(e.target.value)}
@@ -79,7 +93,9 @@ const Signup = () => {
             </div>
 
             <div>
-              <label className="block text-sm mb-1 text-base-content">Password</label>
+              <label className="block text-sm mb-1 text-base-content">
+                Password
+              </label>
               <input
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -91,9 +107,22 @@ const Signup = () => {
             </div>
 
             <div className="flex items-center space-x-2">
-              <input required type="checkbox" className="checkbox checkbox-primary" disabled={loading} />
+              <input
+                required
+                type="checkbox"
+                className="checkbox checkbox-primary"
+                disabled={loading}
+              />
               <label className="text-sm text-base-content/70">
-                I agree to the <a href="#" className="text-primary underline">Terms</a> & <a href="#" className="text-primary underline">Privacy Policy</a>.
+                I agree to the{" "}
+                <a href="#" className="text-primary underline">
+                  Terms
+                </a>{" "}
+                &{" "}
+                <a href="#" className="text-primary underline">
+                  Privacy Policy
+                </a>
+                .
               </label>
             </div>
 
@@ -109,6 +138,20 @@ const Signup = () => {
               )}
             </button>
           </form>
+
+          {/* 🌐 Google Login Button */}
+          <div className="mt-6">
+            <div className="divider">or</div>
+            <button
+              onClick={() => {
+                window.location.href = "http://localhost:4000/auth/google";
+              }}
+              className="btn btn-outline w-full flex items-center justify-center space-x-2"
+            >
+              <FcGoogle className="text-2xl" />
+              <span>Continue with Google</span>
+            </button>
+          </div>
 
           {/* Back to Home Link */}
           <div className="mt-6 text-center">

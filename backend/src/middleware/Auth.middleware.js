@@ -9,13 +9,16 @@ export const authUser=async(req,resizeBy,next)=>{
             return res.status(401).json({ message: "Unauthorized access, please login" });
         }
 
+        console.log("Token:", token);
         const decoded=jwt.verify(token, process.env.JWT_SECRET);
+        console.log("Decoded Token:", decoded);
 
         if(!decoded){
             return res.status(401).json({ message: "Invalid token, please login again" });
         }
 
-        req.user=decoded.userId;
+        req.user=decoded.id || decoded.userId;
+        console.log("Authenticated User ID:", req.user);
 
         next();
     }

@@ -23,7 +23,7 @@ const Navbar = () => {
 
 
   const handleLogout=async()=>{
-    const res=await axios.get("https://blog-app-te1y.onrender.com/api/user/logout", {
+    const res=await axios.get(`${import.meta.env.VITE_API_URL}/api/user/logout`, {
       withCredentials: true
     });
     if(res.status === 201 || res.status === 200){

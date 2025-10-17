@@ -17,7 +17,7 @@ const CreateBlog = () => {
     };
 
     try {
-      const res = await axios.post("https://blog-app-te1y.onrender.com/api/blog/create", blogData, {
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/blog/create`, blogData, {
         withCredentials: true,
       });
 

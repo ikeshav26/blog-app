@@ -1,19 +1,20 @@
-import React, { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useState,useEffect } from 'react';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { AppContext } from '../context/AppContext';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
+import { FcGoogle } from 'react-icons/fc'; // Google icon
+import { useEffectEvent } from 'react';
 
 const Login = () => {
   const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false); // Loading state added
+  const [loading, setLoading] = useState(false);
   const { user, setuser, navigate } = useContext(AppContext);
 
   const submitHandler = async (e) => {
     e.preventDefault();
     setLoading(true);
-
     const formData = { email, password };
 
     try {
@@ -36,6 +37,8 @@ const Login = () => {
       setPassword("");
     }
   };
+  
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-base-100 text-base-content px-4">
@@ -103,6 +106,18 @@ const Login = () => {
               )}
             </button>
           </form>
+
+          {/* 🌐 Google Login Button */}
+          <div className="mt-6">
+            <div className="divider">or</div>
+            <button
+              onClick={()=>{ window.location.href='http://localhost:4000/auth/google'}}
+              className="btn btn-outline w-full flex items-center justify-center space-x-2"
+            >
+              <FcGoogle className="text-2xl" />
+              <span>Continue with Google</span>
+            </button>
+          </div>
 
           {/* Back to Home Link */}
           <div className="mt-6 text-center">

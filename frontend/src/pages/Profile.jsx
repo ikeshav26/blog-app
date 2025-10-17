@@ -11,7 +11,7 @@ const Profile = () => {
     const fetchMyBlogs = async () => {
       setLoading(true);
       try {
-        const res = await axios.get("https://blog-app-te1y.onrender.com/api/blog/my-blogs", {
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/blog/my-blogs`, {
           withCredentials: true,
         });
         if (res.status === 200 || res.status === 201) {
@@ -28,7 +28,7 @@ const Profile = () => {
 
   const deleteHandler = async (e) => {
     const id = e;
-    const res = await axios.get(`https://blog-app-te1y.onrender.com/api/blog/delete/${id}`, {
+    const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/blog/delete/${id}`, {
       withCredentials: true,
     });
     if (res.status === 200 || res.status === 201) {

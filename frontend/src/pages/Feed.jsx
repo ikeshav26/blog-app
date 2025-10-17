@@ -10,7 +10,7 @@ const Feed = () => {
     const fetchBlogs = async () => {
       setLoading(true);
       try {
-        const res = await axios.get("https://blog-app-te1y.onrender.com/api/blog/feed", {
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/blog/feed`, {
           withCredentials: true,
         });
         setblogs(res.data);

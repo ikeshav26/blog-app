@@ -15,7 +15,7 @@ const EditBlog = () => {
     const fetchBlog = async () => {
       setLoading(true);
       try {
-        const res = await axios.get(`https://blog-app-te1y.onrender.com/api/blog/${id}`, {
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/blog/${id}`, {
           withCredentials: true,
         });
         if (res.status === 200 || res.status === 201) {

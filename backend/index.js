@@ -5,11 +5,13 @@ import userRoutes from './src/routes/User.routes.js'
 import cookieParser from 'cookie-parser';
 import blogRoutes from './src/routes/Blog.routes.js'
 import User from './src/models/User.model.js';
+import oauthRoutes from './src/routes/Oauth.routes.js'
 import cors from 'cors';
+import passport from './src/config/passport.js';
 
 const app=express();
 dotenv.config();
-
+passport.initialize();
 
 
 app.use(cors({
@@ -32,6 +34,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/user',userRoutes)
 app.use('/api/blog', blogRoutes);
+app.use('/auth',oauthRoutes)
 
 
 

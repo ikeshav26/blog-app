@@ -4,7 +4,6 @@ import mongoose from 'mongoose';
 const userSchema=new mongoose.Schema({
     username:{
         type:String,
-        required:true
     },
     email:{
         type:String,
@@ -13,7 +12,17 @@ const userSchema=new mongoose.Schema({
     },
     password:{
         type:String,
-        required:true
+    },
+    providerId:{
+        type:String,
+    },
+    avatar:{
+        type:String,
+    },
+    authProvider:{
+        type:String,
+        enum:['local','google','github'],
+        default:'local'
     }
 },{timestamps:true});
 

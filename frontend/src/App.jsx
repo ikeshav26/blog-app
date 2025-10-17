@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext ,useEffect} from 'react'
 import Navbar from './components/Navbar'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import Home from './pages/Home'
@@ -13,12 +13,28 @@ import Contact from './pages/Contact'
 import { useLocation } from 'react-router-dom'
 import { AppContext } from './context/AppContext'
 import  {Toaster}  from 'react-hot-toast'
+import { toast } from 'react-hot-toast'
 
 
 
 const App = () => {
   const location = useLocation()
-  const {user}=useContext(AppContext)
+  const {user,setuser,navigate}=useContext(AppContext)
+
+ useEffect(() => {
+    const path = location.pathname + location.search;
+
+    if (path.includes("success")) {
+      toast.success("Login successful via Google OAuth!");
+      setuser(true);
+      navigate("/"); 
+    } else if (path.includes("oauth=failure")) {
+      toast.error("Google OAuth login failed. Please try again.");
+    }
+  }, [location, setuser, navigate]);
+
+
+ console.log(user)
   
   return (
     <div className='bg-base-100'>
