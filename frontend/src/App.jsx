@@ -27,7 +27,6 @@ const App = () => {
     if (path.includes("success")) {
       toast.success("Login successful via Google OAuth!");
       setuser(true);
-      navigate("/"); 
     } else if (path.includes("oauth=failure")) {
       toast.error("Google OAuth login failed. Please try again.");
     }
