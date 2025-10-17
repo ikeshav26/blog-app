@@ -29,20 +29,16 @@ router.get('/google/callback', (req, res, next) => {
     }
 
     // Successful authentication, generate token
-    const token = jwt.sign(
-      {
-        id: user._id,
-      },
-      process.env.JWT_SECRET,
-      { expiresIn: '1d' }
-    );
-
-    res.cookie('token', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-    });
+    const token=jwt.sign(
+            { userId: user._id },
+            process.env.JWT_SECRET,
+            { expiresIn: "7d" }
+        );
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure:true,
+            sameSite: "None",
+        });
 
     res.redirect(`${process.env.CLIENT_URL}/?oauth=success`);
   })(req, res, next);
